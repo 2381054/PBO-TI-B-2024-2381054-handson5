@@ -69,17 +69,14 @@ public class main {
         }
 
         for (int i = number - 1; i < todos.length; i++) {
-            // if todo is the last element
-            if(i == (todos.length - 1)) {
-                todos[1] = null;
+            if (i == todos.length - 1) {
+                todos[i] = null;
             } else {
-                // replace with the element on the right
-                todos[1] = todos[i + 1];
+                todos[i] = todos[i + 1];
             }
         }
         return true;
     }
-
     private static boolean isSelectedTodoNotValid(Integer number) {
         if (number <= 0) {
             return true;
@@ -115,17 +112,70 @@ public class main {
             String selectedMenu = scanner.nextLine();
             switch (selectedMenu) {
                 case "1":
+                    showMenuAddTodoList();
+                    System.out.println("Menu add todo list");
                     break;
                 case "2":
+                    //showMenuRemoveTodoList();
+                    System.out.println("Menu remove todo list");
                     break;
                 case "3":
+                    //showMenuEditTodoList();
+                    System.out.println("Menu edit todo list");
                     break;
                 case "4":
                     isRunning = false;
                     break;
                 default:
-
+                    System.out.println("Pilih menu dengan benar");
             }
+        }
+    }
+
+    public static String input (String info ){
+        System.out.println(info + ":");
+        String data = scanner.nextLine();
+        return data;
+    }
+
+    public static void showMenuAddTodoList(){
+        System.out.println("MENAMBAH TODO LIST");
+        String todo = input("Todo (x jika batal ) ");
+        if (todo.equals("x")) {
+            //batal
+        } else {
+            addTodoList(todo);
+        }
+    }
+
+    public static void showMenuremoveTodoList(){
+        System.out.println("MENGHAPUS TODO LIST");
+        String todoYangDipilih = input ("Nomor todo yang dihapus (x jika batal ) ");
+        if (todoYangDipilih.equals("x")) {
+            //batal
+        } else {
+            boolean success = removeTodoList(Integer.valueOf(todoYangDipilih));
+            if (!success){
+                System.out.println("Gagal menghapus todo list : " + todoYangDipilih);
+            }
+        }
+    }
+
+    public static void showMenueditTodoList() {
+        System.out.println("MENGEDIT TODO LIST");
+        String selectedTodo = input("Masukkan nomor todo (x jika batal ) ");
+        if (selectedTodo.equals("x")) {
+            return;
+        }
+        String newTodo = input("Masukan todo yang baru (x jika batal ) ");
+        if (newTodo.equals("x")) {
+            return;
+        }
+        boolean isEditTodoSuccess = editTodoList(Integer.valueOf(selectedTodo), newTodo);
+        if (isEditTodoSuccess) {
+            System.out.println("Berhasil mengedit to do");
+        } else {
+            System.out.println("Gagal mengedit to do");
         }
     }
 }
